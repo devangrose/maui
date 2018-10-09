@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import *
 
@@ -26,32 +26,22 @@ def product_new(request):
 def cart (request):
     if request.method == 'POST':
         # if user has a cart
-        try: 
-            cart =  Cart.objects.get(user_id = user.id)
-            order = Order(
-                    product = request.POST['product'],
-                    quantity = int(request.POST['amount']),
-                    user_id = user.id
-                    )
-            cart.orders.append(order)
-            cart.save()
-        # no cart, make new one
-        except:
-            cart = Cart(
-                    user_id = user.id
-                    )
-            order = Order(
-                    product = request.POST['product'],
-                    quantity = int(request.POST['amount']),
-                    user_id = user.id
-                    )
-            cart.orders.append(order)
-            cart.save()
-        return HttpResponse(cart)
+        order = Order(
+                product = Product.objects.get(pk=request.POST['product']),
+                quantity = request.POST['quantity'],
+                user_id = request.user
+                )
+        order.save()
+        return redirect('cart')
+
     if request.method == 'GET':
         cart = Order.objects.all().filter(user_id = request.user.id)
         return render(request,'cart.html', {'cart':cart})
     return HttpResponse('Error');
+
+def order_delete(request, order_id):
+    Order.objects.get(pk=order_id).delete()
+    return redirect('cart')
 
 def checkout (request):
     return HttpResponse('Error');
