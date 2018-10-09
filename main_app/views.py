@@ -17,7 +17,8 @@ def product_new(request):
             product = Product(
                 image_url = form.cleaned_data['image'],
                 name = form.cleaned_data['name'],
-                description = form.cleaned_data['description']
+                description = form.cleaned_data['description'],
+                product_type = form.cleaned_data['type'],
                 )
             product.save()
             return HttpResponse(product)
