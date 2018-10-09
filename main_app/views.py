@@ -76,6 +76,5 @@ def checkout (request):
         return redirect('index') 
     
 def order_history (request):
-    carts = Cart.objects.all().filter(user_id = request.user.id)
-    print(carts[0].orders.all())
+    carts = Cart.objects.all().filter(user_id = request.user.id, closed=True)
     return render(request, 'order_history.html', {'carts':carts})
