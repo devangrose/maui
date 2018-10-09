@@ -5,7 +5,6 @@ from .models import *
 # Create your views here.
 def index (request):
     products = Product.objects.all()
-    print(products)
     return render(request, 'home.html', {'products': products})
 
 def product_show(request, product_id):
@@ -49,6 +48,9 @@ def cart (request):
             cart.orders.append(order)
             cart.save()
         return HttpResponse(cart)
+    if request.method == 'GET':
+        cart = Order.objects.all().filter(user_id = request.user.id)
+        return render(request,'cart.html', {'cart':cart})
     return HttpResponse('Error');
 
 def checkout (request):
