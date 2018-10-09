@@ -1,3 +1,10 @@
 nav ul {
     list-style-type: none;
 }
+.cards {
+    display: inline;
+    width: 10%;
+}
+.products {
+    margin-top: 50px;
+}

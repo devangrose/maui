@@ -4,8 +4,7 @@ from .models import *
 
 # Create your views here.
 def index (request):
-    products = Product.objects.all()
-    return render(request, 'home.html', {'products': products})
+    return render(request, 'home.html')
 
 def product_show(request, product_id):
     return HttpResponse(request, 'test');
@@ -43,6 +42,14 @@ def cart (request):
 def order_delete(request, order_id):
     Order.objects.get(pk=order_id).delete()
     return redirect('cart')
+
+def shirts(request):
+    products = Product.objects.all().filter(product_type='shirt')
+    return render(request,'shirts.html', {'products':products})
+
+def pants(request):
+    products = Product.objects.all().filter(product_type='pants')
+    return render(request,'pants.html', {'products':products})
 
 def checkout (request):
     return HttpResponse('Error');
