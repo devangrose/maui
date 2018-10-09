@@ -9,6 +9,7 @@ class Product(models.Model):
     image_url = models.CharField(max_length=255)
     name = models.CharField(max_length=255)
     description = models.TextField()
+    product_type=models.CharField(max_length=100, default="shirt")
     
     def __str__(self):
         return self.name
