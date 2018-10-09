@@ -19,10 +19,10 @@ class Order(models.Model):
     quantity = models.IntegerField()
 
     def __str__(self):
-        return str(product) + ', ' + str(quantity)
+        return str(self.product) + ', ' + str(self.quantity)
 class Cart(models.Model):
     orders = models.ManyToManyField(Order, related_name='CartOrders')
     user_id = models.ForeignKey(User, on_delete=models.DO_NOTHING)
 
     def __str__(self):
-        return str(user_id)
+        return str(self.user_id)
