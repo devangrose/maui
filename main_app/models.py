@@ -24,6 +24,7 @@ class Order(models.Model):
 class Cart(models.Model):
     orders = models.ManyToManyField(Order, related_name='CartOrders')
     user_id = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    closed = models.BooleanField(default = False)
 
     def __str__(self):
         return str(self.user_id)

@@ -24,6 +24,10 @@ def product_new(request):
     return HttpResponse('Error');
 
 def cart (request):
+    current_cart = Cart.objects.get_or_create(
+            user_id = request.user,
+            closed = False
+            )[0]
     if request.method == 'POST':
         order = Order(
                 product = Product.objects.get(pk=request.POST['product']),
@@ -31,11 +35,13 @@ def cart (request):
                 user_id = request.user
                 )
         order.save()
+        current_cart.orders.add(order)
+        current_cart.save()
         return redirect('cart')
 
     if request.method == 'GET':
-        cart = Order.objects.all().filter(user_id = request.user.id)
-        return render(request,'cart.html', {'cart':cart})
+        orders = current_cart.orders.all()
+        return render(request,'cart.html', {'cart':orders})
     return HttpResponse('Error');
 
 def order_edit(request, order_id):
@@ -57,16 +63,15 @@ def pants(request):
     return render(request,'pants.html', {'products':products})
 
 def checkout (request):
-    orders = Order.objects.all().filter(user_id=request.user.id)
+    cart = Cart.objects.get(
+            user_id = request.user,
+            closed = False
+            )
     if request.method == 'GET':
-        return render(request, 'checkout.html',{'orders':orders})
+        return render(request, 'checkout.html',{'orders':cart.orders.all()})
     else:
 
-        cart = Cart()
-        cart.user_id = request.user
-        cart.save()
-        for order in orders:
-            cart.orders.add(order)
+        cart.closed = True
         cart.save()
         return redirect('index') 
     
