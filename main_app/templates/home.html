@@ -2,4 +2,13 @@
 
 {% block content %}
 <h1> Hi from the home page</h1>
+{% for product in products %}
+<img src="{{product.image_url}}">
+<p>{{product.name}}</p>
+<div>
+    {% if user.is_authenticated %}
+    <button class="btn btn-sm btn-primary ">Add to cart</button>
+    {% endif %}
+</div>
+{% endfor %}
 {% endblock %}

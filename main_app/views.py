@@ -4,7 +4,9 @@ from .models import *
 
 # Create your views here.
 def index (request):
-    return render(request, 'home.html')
+    products = Product.objects.all()
+    print(products)
+    return render(request, 'home.html', {'products': products})
 
 def product_show(request, product_id):
     return HttpResponse(request, 'test');

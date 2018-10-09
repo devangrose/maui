@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% if len(cart) == 0 %}
+<h1> Oh no, it looks like you haven't added anything to your cart :(</h1>
+<h3> Add some things to your cart in order to check out!</h3>
+{% else %}
+  {% for order in cart %}
+  <h1>{{order}}</h1>
+  {% endfor %}
+{% endif %}
