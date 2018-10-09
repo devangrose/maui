@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Review Your Order</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <td>Product</td>
+            <td>Quantity</td>
+        </tr>  
+    </thead>
+  {% for order in orders %}
+  <tr>
+      <td>{{order.product.name}}</td>
+      <td>
+          <form class="form-inline edit-form" method="POST" action="/order/{{order.id}}/edit">
+                {% csrf_token %}
+                <input class="form-control" type="number" name="quantity" value="{{order.quantity}}"> 
+                <button class="btn btn-sm btn-primary" type="submit">Change Quantity</button>
+          </form>
+      </td>
+  </tr>
+  {% endfor %}
+</table>
+<h3> If this isn't what you wanted press <a href="/cart">here</a> to edit your order</h3>
+<form class="form-inline" method="POST" action="/cart/checkout">
+  {% csrf_token %}
+  <button class="btn btn-lg btn-success" type="submit">Order!</button>
+</form>
+{% endblock %}
