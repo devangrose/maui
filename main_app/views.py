@@ -25,7 +25,6 @@ def product_new(request):
 
 def cart (request):
     if request.method == 'POST':
-        # if user has a cart
         order = Order(
                 product = Product.objects.get(pk=request.POST['product']),
                 quantity = request.POST['quantity'],
@@ -38,6 +37,12 @@ def cart (request):
         cart = Order.objects.all().filter(user_id = request.user.id)
         return render(request,'cart.html', {'cart':cart})
     return HttpResponse('Error');
+
+def order_edit(request, order_id):
+    order = Order.objects.get(pk=order_id)
+    order.quantity=request.POST['quantity']
+    order.save()
+    return redirect('cart')
 
 def order_delete(request, order_id):
     Order.objects.get(pk=order_id).delete()

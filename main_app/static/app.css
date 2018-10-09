@@ -6,5 +6,20 @@ nav ul {
     width: 10%;
 }
 .products {
-    margin-top: 50px;
+}
+.edit-form input {
+    margin-right: 20px;
+}
+body {
+    background-image: url('http://wallpicel.com/wp-content/uploads/2017/11/Wallpaper-Hd-Of-Hawaiian-Flowers-Background-Best-And-Rose-Flower-Images-Desktop.jpg')
+}
+.container {
+    background: white;
+    margin: 0 auto;
+    min-height: 1000px;
+    padding: 50px 20px;
+}
+.card img {
+    width: auto;
+    height: 400px;
 }

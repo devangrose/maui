@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-info">
   <a class="navbar-brand" href="/">Maui Wowie</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -13,15 +13,15 @@
         <a class="nav-link" href="/shirts">Shirts</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link disabled" href="/pants">Pants</a>
+        <a class="nav-link" href="/pants">Pants</a>
       </li>
     </ul>
     <ul class="navbar-nav my-2 my-lg-0">
       {% if user.is_authenticated  %}
-      <li class="nav-item">
+      <li class="nav-item active">
         <a class="nav-link" href="/cart">My Cart</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item active">
         <a class="nav-link" href="/auth/logout">Logout</a>
       </li>
       {% else %}

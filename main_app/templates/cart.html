@@ -18,8 +18,14 @@
   {% for order in cart %}
   <tr>
       <td>{{order.product.name}}</td>
-      <td>{{order.quantity}}</td>
-      <td><a class="btn btn-sm btn-delete" href="/order/{{order.id}}/delete">Delete</a></td>
+      <td>
+          <form class="form-inline edit-form" method="POST" action="/order/{{order.id}}/edit">
+                {% csrf_token %}
+                <input class="form-control" type="number" name="quantity" value="{{order.quantity}}"> 
+                <button class="btn btn-sm btn-primary" type="submit">Change Quantity</button>
+          </form>
+      </td>
+      <td><a class="btn btn-delete" href="/order/{{order.id}}/delete">Delete</a></td>
   </tr>
   {% endfor %}
 </table>
