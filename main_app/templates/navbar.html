@@ -16,16 +16,16 @@
         <a class="nav-link disabled" href="#">Disabled</a>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
+    <ul class="my-2 my-lg-0">
       {% if user.is_authenticated  %}
       <li class="nav-item">
-        <a class="nav-link disabled" href="/auth/logout">Logout</a>
+        <a class="nav-link" href="/auth/logout">Logout</a>
       </li>
       {% else %}
       <li class="nav-item">
-        <a class="nav-link disabled" href="">Login</a>
+        <a class="nav-link" href="/auth/login">Login</a>
       </li>
       {% endif %}
-    </form>
+    </ul>
   </div>
 </nav>

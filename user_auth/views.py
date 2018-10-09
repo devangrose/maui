@@ -33,14 +33,16 @@ def login(request):
         password = request.POST['password']
 
         user = auth.authenticate(username=username, password=password)
+        print(user)
 
         if user is not None:
             auth.login(request, user)
             return redirect('index')
         else:
+            print('error') 
             return render(
                     request,
-                    'login.html',
+                    'todoapp/login.html',
                     {
                         'error':'There has been an error',
                     })
