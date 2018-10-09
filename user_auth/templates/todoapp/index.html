@@ -1,0 +1,70 @@
+{% extends 'todoapp/base.html' %}
+
+{% block content%}
+{% if user.is_authenticated %}
+<h1>{{user.username}}'s Todo List</h1>
+{% else %}
+<h1>Hello, anonymous Todo List user!</h1>
+{% endif %} 
+
+{% if error %}
+    <h3 class="text-danger">{{ error }}</h3>
+{% endif %}
+
+{% if user.is_authenticated %}  
+<form method="POST" action"/">
+    {% csrf_token %}
+    <div class="form-group">
+        <label>Who are you?</label>
+        <select name="userid" class="form-control">
+            {% for u in users %}
+            <option value="{{u.id}}">
+                {{u.username}}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label>What you gotta do?</label>
+        <input type="text" name="text" class="form-control">
+    </div>
+    <input type="submit" class="btn btn-primary">
+</form>
+{% endif %}
+<div class="row">
+    <div class="col-xs-12">
+        <h2>The list of doing</h2> 
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Name</th>
+                    {% if user.is_authenticated %}
+                    <th>Done?</th>
+                    <th>Remove?</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            {% for todo in todos %}
+            <tr>
+                <td>{{todo.text}}</td> 
+                <td>{{todo.user}}</td> 
+                {% if user.is_authenticated %}
+                <td>
+                    {% if todo.is_complete %}
+                    <i class="glyphicon glyphicon-ok"></i>
+                    {% else %}
+                    <a href="{{todo.id}}/done/" class="btn btn-success">Mark Done</a>
+                    {% endif %}
+                </td> 
+                <td>
+                    <a href="{{todo.id}}/delete/" class="btn btn-danger">Remove</a>
+                </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+{% endblock %}
