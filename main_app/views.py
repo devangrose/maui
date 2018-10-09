@@ -57,4 +57,20 @@ def pants(request):
     return render(request,'pants.html', {'products':products})
 
 def checkout (request):
-    return HttpResponse('Error');
+    orders = Order.objects.all().filter(user_id=request.user.id)
+    if request.method == 'GET':
+        return render(request, 'checkout.html',{'orders':orders})
+    else:
+
+        cart = Cart()
+        cart.user_id = request.user
+        cart.save()
+        for order in orders:
+            cart.orders.add(order)
+        cart.save()
+        return redirect('index') 
+    
+def order_history (request):
+    carts = Cart.objects.all().filter(user_id = request.user.id)
+    print(carts[0].orders.all())
+    return render(request, 'order_history.html', {'carts':carts})

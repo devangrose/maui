@@ -1,12 +1,7 @@
 {% extends 'base.html' %}
-{% block content %}
-<h1> Your cart</h1>
 
-{% if cart|length == 0 %}
-<hr>
-<h1> Oh no, it looks like you haven't added anything to your cart :(</h1>
-<h3> Add some things to your cart in order to check out!</h3>
-{% else %}
+{% block content %}
+{% for cart in carts %}
 <table class="table table-striped">
     <thead>
         <tr>
@@ -15,20 +10,18 @@
             <td></td>
         </tr>  
     </thead>
-  {% for order in cart %}
+  {% for order in cart.orders.all %}
   <tr>
       <td>{{order.product.name}}</td>
       <td>
           <form class="form-inline edit-form" method="POST" action="/order/{{order.id}}/edit">
                 {% csrf_token %}
                 <input class="form-control" type="number" name="quantity" value="{{order.quantity}}"> 
-                <button class="btn btn-sm btn-primary" type="submit">Change Quantity</button>
           </form>
       </td>
-      <td><a class="btn btn-delete" href="/order/{{order.id}}/delete">Delete</a></td>
   </tr>
   {% endfor %}
 </table>
-  <a class="btn btn-success" href="/cart/checkout" id="checkout">Checkout</a>
-{% endif %}
+
+{% endfor %}
 {% endblock %}
