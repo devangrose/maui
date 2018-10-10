@@ -30,10 +30,13 @@ def login(request):
     if request.method == 'GET':
         return render(request, 'todoapp/login.html')
     elif request.method == 'POST':
-        session_cart = Cart.objects.get(
-                session_id = request.session.session_key,
-                closed = False
-                )
+        try:
+            session_cart = Cart.objects.get(
+                    session_id = request.session.session_key,
+                    closed = False
+                    )
+        except:
+            session_cart = None
         username = request.POST['username']
         password = request.POST['password']
 
