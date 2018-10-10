@@ -18,7 +18,7 @@ class Product(models.Model):
 
 class Order(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    user_id = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    user_id = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True)
     quantity = models.IntegerField()
     price = models.IntegerField(default = 0)
 
@@ -31,11 +31,11 @@ class Order(models.Model):
 
 class Cart(models.Model):
     orders = models.ManyToManyField(Order, related_name='CartOrders')
-    user_id = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    user_id = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True)
     closed = models.BooleanField(default = False)
     date = models.DateField(default=datetime.datetime.now)
     price = models.IntegerField(default = 0)
-    session_id = models.CharField(default='none')
+    session_id = models.CharField(max_length=100,default='none')
 
     def update_price(self):
         total_sum = 0

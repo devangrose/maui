@@ -33,7 +33,7 @@ def cart (request):
         current_cart = Cart.objects.get_or_create(
                 session_id = request.session.session_key,
                 closed = False
-                )
+                )[0]
     else:
         current_cart = Cart.objects.get_or_create(
                 user_id = request.user,
@@ -43,7 +43,6 @@ def cart (request):
         order = Order(
                 product = Product.objects.get(pk=request.POST['product']),
                 quantity = request.POST['quantity'],
-                user_id = request.user
                 )
         order.update_price()
         order.save()
@@ -67,7 +66,7 @@ def order_edit(request, order_id):
         current_cart = Cart.objects.get_or_create(
                 session_id = request.session.session_key,
                 closed = False
-                )
+                )[0]
     else:
         current_cart = Cart.objects.get_or_create(
                 user_id = request.user,
@@ -89,14 +88,22 @@ def pants(request):
     return render(request,'pants.html', {'products':products})
 
 def checkout (request):
-    cart = Cart.objects.get(
-            user_id = request.user,
-            closed = False
-            )
+    if not request.user.id:
+        cart = Cart.objects.get_or_create(
+                session_id = request.session.session_key,
+                closed = False
+                )[0]
+    else:
+        cart = Cart.objects.get_or_create(
+                user_id = request.user,
+                closed = False
+                )[0]
     if request.method == 'GET':
         return render(request, 'checkout.html',{'orders':cart.orders.all(),'current':cart})
     else:
         cart.closed = True
+        if request.user.id is not None:
+            cart.user_id = request.user
         cart.save()
         return redirect('index') 
     
