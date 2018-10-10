@@ -5,6 +5,10 @@ import datetime
 
 # Create your views here.
 def index (request):
+    if not request.session.session_key:
+        request.session.create()
+    print(request.session.session_key)
+    print(request.user.id, 'user')
     return render(request, 'home.html')
 
 def product_show(request, product_id):
@@ -25,30 +29,51 @@ def product_new(request):
     return HttpResponse('Error');
 
 def cart (request):
-    current_cart = Cart.objects.get_or_create(
-            user_id = request.user,
-            closed = False
-            )[0]
+    if not request.user.id:
+        current_cart = Cart.objects.get_or_create(
+                session_id = request.session.session_key,
+                closed = False
+                )
+    else:
+        current_cart = Cart.objects.get_or_create(
+                user_id = request.user,
+                closed = False
+                )[0]
     if request.method == 'POST':
         order = Order(
                 product = Product.objects.get(pk=request.POST['product']),
                 quantity = request.POST['quantity'],
                 user_id = request.user
                 )
+        order.update_price()
         order.save()
         current_cart.orders.add(order)
+        current_cart.update_price()
         current_cart.save()
         return redirect('cart')
 
     if request.method == 'GET':
         orders = current_cart.orders.all()
-        return render(request,'cart.html', {'cart':orders})
+        return render(request,'cart.html', {'cart':orders, 'current':current_cart})
     return HttpResponse('Error');
 
 def order_edit(request, order_id):
     order = Order.objects.get(pk=order_id)
     order.quantity=request.POST['quantity']
+    order.update_price()
     order.save()
+
+    if not request.user.id:
+        current_cart = Cart.objects.get_or_create(
+                session_id = request.session.session_key,
+                closed = False
+                )
+    else:
+        current_cart = Cart.objects.get_or_create(
+                user_id = request.user,
+                closed = False
+                )[0]
+    current_cart.update_price()
     return redirect('cart')
 
 def order_delete(request, order_id):
@@ -69,9 +94,8 @@ def checkout (request):
             closed = False
             )
     if request.method == 'GET':
-        return render(request, 'checkout.html',{'orders':cart.orders.all()})
+        return render(request, 'checkout.html',{'orders':cart.orders.all(),'current':cart})
     else:
-
         cart.closed = True
         cart.save()
         return redirect('index') 

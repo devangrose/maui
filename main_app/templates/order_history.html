@@ -8,6 +8,8 @@
         <tr>
             <td>Product</td>
             <td>Quantity</td>
+            <td>Price</td>
+            <td>Total Cost</td>
             <td></td>
         </tr>  
     </thead>
@@ -15,13 +17,20 @@
   <tr>
       <td>{{order.product.name}}</td>
       <td>
-          <form class="form-inline edit-form" method="POST" action="/order/{{order.id}}/edit">
-                {% csrf_token %}
-                <input class="form-control" type="number" name="quantity" value="{{order.quantity}}"> 
-          </form>
+          <p>{{order.quantity}}</p>
       </td>
+      <td>$ {{order.product.price}}</td>
+      <td>$ {{order.price}}</td>
+      <td><a class="btn btn-delete" href="/order/{{order.id}}/delete">Delete</a></td>
   </tr>
   {% endfor %}
+  <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="right">Order Cost: ${{cart.price}}</td>
+  </tr>
 </table>
 
 {% endfor %}

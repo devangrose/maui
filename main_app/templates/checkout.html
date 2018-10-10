@@ -8,20 +8,27 @@
         <tr>
             <td>Product</td>
             <td>Quantity</td>
+            <td>Price</td>
+            <td>Total Cost</td>
+            <td></td>
         </tr>  
     </thead>
   {% for order in orders %}
   <tr>
       <td>{{order.product.name}}</td>
       <td>
-          <form class="form-inline edit-form" method="POST" action="/order/{{order.id}}/edit">
-                {% csrf_token %}
-                <input class="form-control" type="number" name="quantity" value="{{order.quantity}}"> 
-                <button class="btn btn-sm btn-primary" type="submit">Change Quantity</button>
-          </form>
+          <p>{{order.quantity}}</p>
       </td>
+      <td>$ {{order.product.price}}</td>
+      <td>$ {{order.price}}</td>
   </tr>
   {% endfor %}
+  <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="right">Order Cost: ${{current.price}}</td>
+  </tr>
 </table>
 <h3> If this isn't what you wanted press <a href="/cart">here</a> to edit your order</h3>
 <form class="form-inline" method="POST" action="/cart/checkout">

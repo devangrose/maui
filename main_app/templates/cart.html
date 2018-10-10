@@ -12,6 +12,8 @@
         <tr>
             <td>Product</td>
             <td>Quantity</td>
+            <td>Price</td>
+            <td>Total Cost</td>
             <td></td>
         </tr>  
     </thead>
@@ -25,9 +27,18 @@
                 <button class="btn btn-sm btn-primary" type="submit">Change Quantity</button>
           </form>
       </td>
-      <td><a class="btn btn-delete" href="/order/{{order.id}}/delete">Delete</a></td>
+      <td>$ {{order.product.price}}</td>
+      <td>$ {{order.price}}</td>
+      <td><a role="button" class="btn btn-danger" href="/order/{{order.id}}/delete">Delete</a></td>
   </tr>
   {% endfor %}
+  <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="right">Order Cost: ${{current.price}}</td>
+  </tr>
 </table>
   <a class="btn btn-success" href="/cart/checkout" id="checkout">Checkout</a>
 {% endif %}
