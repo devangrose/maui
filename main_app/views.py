@@ -108,6 +108,26 @@ def checkout (request):
         else:
             cart.delete()
         return redirect('index') 
+
+def coupon_code(request):
+    if not request.user.id:
+        cart = Cart.objects.get_or_create(
+                session_id = request.session.session_key,
+                closed = False
+                )[0]
+    else:
+        cart = Cart.objects.get_or_create(
+                user_id = request.user,
+                closed = False
+                )[0]
+    if request.POST['coupon'] == 'MAUI':
+        cart.coupon = 0.3
+        cart.coupon_code = "MAUI"
+        cart.update_price()
+        print(cart.price)
+        cart.save()
+
+    return redirect('checkout')
     
 def order_history (request):
     carts = Cart.objects.all().filter(user_id = request.user.id, closed=True)

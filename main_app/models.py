@@ -36,12 +36,19 @@ class Cart(models.Model):
     date = models.DateField(default=datetime.datetime.now)
     price = models.IntegerField(default = 0)
     session_id = models.CharField(max_length=100,default='none')
+    coupon = models.FloatField(default = 1)
+    coupon_code = models.CharField(max_length=100, null=True, default=None)
+    discount_amount = models.IntegerField(default=0)
+    final_price = models.IntegerField(default = 0)
 
     def update_price(self):
         total_sum = 0
         for order in self.orders.all():
             total_sum += order.price
         self.price = total_sum
+        if self.coupon != 1.0:
+            self.discount_amount = total_sum * self.coupon
+        self.final_price = total_sum - self.discount_amount
 
     def __str__(self):
         return str(self.user_id)

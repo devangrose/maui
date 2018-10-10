@@ -6,11 +6,11 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <td>Product</td>
-            <td>Quantity</td>
-            <td>Price</td>
-            <td>Total Cost</td>
-            <td></td>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total Cost</th>
+            <th></th>
         </tr>  
     </thead>
   {% for order in cart.orders.all %}
@@ -24,10 +24,28 @@
   </tr>
   {% endfor %}
   <tr>
+      <td></td> 
+      <td></td> 
+      <td></td> 
+      <td></td> 
+  </tr>
+  <tr>
       <td></td>
       <td></td>
+      <td class="right">Order Cost:</td>
+      <td>$ {{cart.price}}</td>
+  </tr>
+  <tr>
       <td></td>
-      <td class="right">Order Cost: ${{cart.price}}</td>
+      <td></td>
+      <td class="right">Discounts: </td>
+      <td>$ {{cart.discount_amount}}</td>
+  </tr>
+  <tr>
+      <td></td>
+      <td></td>
+      <td class="right">Total:  </td>
+      <td>$ {{cart.final_price}}</td>
   </tr>
 </table>
 
