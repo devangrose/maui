@@ -104,7 +104,9 @@ def checkout (request):
         cart.closed = True
         if request.user.id is not None:
             cart.user_id = request.user
-        cart.save()
+            cart.save()
+        else:
+            cart.delete()
         return redirect('index') 
     
 def order_history (request):
