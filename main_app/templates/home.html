@@ -1,19 +1,59 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1> Hi from the home page</h1>
-{% for product in products %}
-<img src="{{product.image_url}}">
-<p>{{product.name}}</p>
-<div>
-    {% if user.is_authenticated %}
-    <form method="POST" action="/cart">
-    {% csrf_token %}
-    <input type="text" value="{{product.id}}" hidden name="product"> 
-    <input type="number" placeholder="Quantity" name="quantity">
-    <button type="submit" class="btn btn-sm btn-primary ">Add to cart</button>
-    </form>
-    {% endif %}
+<h1>Welcome to Maui Wowie!</h1>
+<div class="alert alert-secondary">
+    <h2>Press <a href="/auth/login">here</a> to login</h2>
+    <h2>If you're new here, press <a href="/auth/signup">here</a> to sign up with Maui Wowie!</h2>
 </div>
-{% endfor %}
+<section>
+    <h3>Here are some of our top shirt products</h3>
+    <div class="row">
+    {% for product in shirts %}
+        <div class="col">
+          <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="{{product.image_url}}" alt="Product Image">
+              <div class="card-body">
+                  <h5 class="card-title">{{product.name}} - ${{product.price}}</h5>
+                <p class="card-text">{{product.description}}</p>
+                <form method="POST" action="/cart">
+                {% csrf_token %}
+                <input type="text" value="{{product.id}}" hidden name="product"> 
+                <div class="form-group">
+                <input type="number" placeholder="Quantity" name="quantity">
+                </div>
+                <button type="submit" class="btn btn-sm btn-primary ">Add to cart</button>
+                </form>
+              </div>
+          </div>
+      </div>
+    {% endfor %}
+    </div>
+</section>
+
+<section>
+    <h3>Here are some of our top shirt products</h3>
+    <div class="row">
+    {% for product in pants %}
+        <div class="col">
+          <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="{{product.image_url}}" alt="Product Image">
+              <div class="card-body">
+                  <h5 class="card-title">{{product.name}} - ${{product.price}}</h5>
+                <p class="card-text">{{product.description}}</p>
+                <form method="POST" action="/cart">
+                {% csrf_token %}
+                <input type="text" value="{{product.id}}" hidden name="product"> 
+                <div class="form-group">
+                <input type="number" placeholder="Quantity" name="quantity">
+                </div>
+                <button type="submit" class="btn btn-sm btn-primary ">Add to cart</button>
+                </form>
+              </div>
+          </div>
+      </div>
+    {% endfor %}
+    </div>
+
+</section>
 {% endblock %}

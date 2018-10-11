@@ -11,7 +11,8 @@ nav ul {
     margin-right: 20px;
 }
 body {
-    background-image: url('http://wallpicel.com/wp-content/uploads/2017/11/Wallpaper-Hd-Of-Hawaiian-Flowers-Background-Best-And-Rose-Flower-Images-Desktop.jpg')
+    background-image: url('background.jpg');
+    background-repeat: repeat;
 }
 .container {
     background: white;

@@ -9,7 +9,9 @@ def index (request):
         request.session.create()
     print(request.session.session_key)
     print(request.user.id, 'user')
-    return render(request, 'home.html')
+    shirts = Product.objects.all().filter(product_type='shirt')[:3]
+    pants = Product.objects.all().filter(product_type='pants')
+    return render(request, 'home.html', {'shirts':shirts, 'pants':pants})
 
 def product_show(request, product_id):
     return HttpResponse(request, 'test');
@@ -107,7 +109,10 @@ def checkout (request):
             cart.save()
         else:
             cart.delete()
-        return redirect('index') 
+        if request.user.is_authenticated:
+            return redirect('order_history') 
+        else: 
+            return redirect('index')
 
 def coupon_code(request):
     if not request.user.id:
