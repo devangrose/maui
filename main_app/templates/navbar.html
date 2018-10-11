@@ -18,7 +18,11 @@
     </ul>
     <ul class="navbar-nav my-2 my-lg-0">
       <li class="nav-item active">
-        <a class="nav-link" href="/cart">My Cart</a>
+        <a class="nav-link" href="/cart">My Cart
+          {% if request.session.cart and request.session.cart != 0 %}
+          <span id="cart">({{request.session.cart}})</span>
+          {% endif %}
+        </a>
       </li>
       {% if user.is_authenticated  %}
       <li class="nav-item active">

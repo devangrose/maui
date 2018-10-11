@@ -14,6 +14,7 @@
         <form method="POST" action="/cart">
         {% csrf_token %}
         <input type="text" value="{{product.id}}" hidden name="product"> 
+        <input type="text" value="/shirts" hidden name="next">
         <div class="form-group">
         <input type="number" placeholder="Quantity" name="quantity">
         </div>

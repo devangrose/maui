@@ -30,3 +30,6 @@ body {
 .right {
     text-align: right;
 }
+#cart {
+    font-weight: bold;
+}

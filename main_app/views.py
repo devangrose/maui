@@ -51,10 +51,15 @@ def cart (request):
         current_cart.orders.add(order)
         current_cart.update_price()
         current_cart.save()
-        return redirect('cart')
+        request.session['cart'] = len(current_cart.orders.all())
+        request.session['message'] = "Successfully added to cart"
+        return redirect(request.POST.get('next','index'))
 
     if request.method == 'GET':
         orders = current_cart.orders.all()
+        current_cart.update_price()
+        request.session['cart'] = len(current_cart.orders.all())
+        current_cart.save()
         return render(request,'cart.html', {'cart':orders, 'current':current_cart})
     return HttpResponse('Error');
 
