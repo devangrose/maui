@@ -7,8 +7,6 @@ import datetime
 def index (request):
     if not request.session.session_key:
         request.session.create()
-    print(request.session.session_key)
-    print(request.user.id, 'user')
     shirts = Product.objects.all().filter(product_type='shirt')[:3]
     pants = Product.objects.all().filter(product_type='pants')
     return render(request, 'home.html', {'shirts':shirts, 'pants':pants})
