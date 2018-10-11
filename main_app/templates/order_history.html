@@ -1,53 +1,58 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% for cart in carts %}
-<h2>{{cart.date}}</h2>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Product</th>
-            <th>Quantity</th>
-            <th>Price</th>
-            <th>Total Cost</th>
-            <th></th>
-        </tr>  
-    </thead>
-  {% for order in cart.orders.all %}
-  <tr>
-      <td>{{order.product.name}}</td>
-      <td>
-          <p>{{order.quantity}}</p>
-      </td>
-      <td>$ {{order.product.price}}</td>
-      <td>$ {{order.price}}</td>
-  </tr>
-  {% endfor %}
-  <tr>
-      <td></td> 
-      <td></td> 
-      <td></td> 
-      <td></td> 
-  </tr>
-  <tr>
-      <td></td>
-      <td></td>
-      <td class="right">Order Cost:</td>
-      <td>$ {{cart.price}}</td>
-  </tr>
-  <tr>
-      <td></td>
-      <td></td>
-      <td class="right">Discounts: </td>
-      <td>$ {{cart.discount_amount}}</td>
-  </tr>
-  <tr>
-      <td></td>
-      <td></td>
-      <td class="right">Total:  </td>
-      <td>$ {{cart.final_price}}</td>
-  </tr>
-</table>
+{% if carts|length == 0 %}
+<h2>It looks like you haven't ordered anything yet!</h2>
 
-{% endfor %}
+{% else %}
+    {% for cart in carts %}
+    <h2>{{cart.date}}</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total Cost</th>
+                <th></th>
+            </tr>  
+        </thead>
+      {% for order in cart.orders.all %}
+      <tr>
+          <td>{{order.product.name}}</td>
+          <td>
+              <p>{{order.quantity}}</p>
+          </td>
+          <td>$ {{order.product.price}}</td>
+          <td>$ {{order.price}}</td>
+      </tr>
+      {% endfor %}
+      <tr>
+          <td></td> 
+          <td></td> 
+          <td></td> 
+          <td></td> 
+      </tr>
+      <tr>
+          <td></td>
+          <td></td>
+          <td class="right">Order Cost:</td>
+          <td>$ {{cart.price}}</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td></td>
+          <td class="right">Discounts: </td>
+          <td>$ {{cart.discount_amount}}</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td></td>
+          <td class="right">Total:  </td>
+          <td>$ {{cart.final_price}}</td>
+      </tr>
+    </table>
+
+    {% endfor %}
+{% endif %}
 {% endblock %}
