@@ -1,0 +1,36 @@
+nav ul {
+    list-style-type: none;
+}
+.cards {
+    display: inline;
+    width: 10%;
+}
+.products {
+}
+.edit-form input {
+    margin-right: 20px;
+}
+body {
+    background-image: url('background.jpg');
+    font-family: 'Kodchasan', sans-serif;
+    background-repeat: repeat;
+}
+.container {
+    background: white;
+    margin: 0 auto;
+    min-height: 1000px;
+    padding: 50px 20px;
+}
+.card img {
+    width: auto;
+    height: 400px;
+}
+#checkout {
+    color: white;
+}
+.right {
+    text-align: right;
+}
+#cart {
+    font-weight: bold;
+}
