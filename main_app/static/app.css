@@ -12,6 +12,7 @@ nav ul {
 }
 body {
     background-image: url('background.jpg');
+    font-family: 'Kodchasan', sans-serif;
     background-repeat: repeat;
 }
 .container {
