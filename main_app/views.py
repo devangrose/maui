@@ -112,6 +112,7 @@ def checkout (request):
             cart.save()
         else:
             cart.delete()
+        request.session['cart'] = 0
         if request.user.is_authenticated:
             return redirect('order_history') 
         else: 
